@@ -4,12 +4,18 @@ class CommentsController < ApplicationController
   end
 
   def create
-    comment = Comment.create! params.require(:comment).permit(:content)
-    comment.image.attach(params[:comment][:image])
+    comment = Comment.create!(content: params[:content])
+    comment.image.attach(params[:image])
     redirect_to comment
   end
 
   def show
-    comment = Comment.find(paramd[:id])
+    @comment = Comment.find(params[:id])
+  end
+
+  private
+
+  def comment_params
+    params.require(:comment).permit(:content)
   end
 end
